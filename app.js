@@ -291,8 +291,24 @@ app.post("/api/employees", (req, res) => {
 });
 
 //PUT
-kjhkjh;
 
+app.put('/api/employees/:id', (req, res) => {
+  const user = data.find((b) => b.id === parseInt(req.params.id));
+  if (!user) return res.status(404).send("employees not found");
+
+
+  const { name, age , department,position,salary,email,phoneNumber,address,registrationDate } = req.body;
+  user.name = name;
+  user.age = age;
+  user.department = department;
+  user.position = position;
+  user.salary = salary;
+  user.email = email;
+  user.phoneNumber = phoneNumber;
+  user.address = address;
+  user.registrationDate = registrationDate;
+  res.json(user);
+});
 //DELETE
 app.delete("/api/employees/:id", (req, res) => {
   const idToDelete = parseInt(req.params.id);
