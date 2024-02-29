@@ -247,6 +247,19 @@ const data = [
 app.use(express.json());
 
 //GET
+app.get("/api/employees", (req, res) => {
+  res.json(data);
+});
+
+app.get("/api/employees/:id", (req, res) => {
+  const index = parseInt(req.params.id);
+  const foundData = data.find((item) => item.id === index);
+  if (foundData) {
+    res.json(foundData);
+  } else {
+    res.status(404).send("Not found");
+  }
+});
 
 //POST
 app.post("/api/employees", (req, res) => {
@@ -278,6 +291,7 @@ app.post("/api/employees", (req, res) => {
 });
 
 //PUT
+kjhkjh;
 
 //DELETE
 app.delete("/api/employees/:id", (req, res) => {
