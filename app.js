@@ -247,13 +247,55 @@ const data = [
 app.use(express.json());
 
 //GET
+app.get("/api/employees", (req, res) => {
+  res.json(data);
+});
+
+app.get("/api/employees/:id", (req, res) => {
+  const index = parseInt(req.params.id);
+  const foundData = data.find((item) => item.id === index);
+  if (foundData) {
+    res.json(foundData);
+  } else {
+    res.status(404).send("Not found");
+  }
+});
 
 //POST
+app.post("/api/employees", (req, res) => {
+  const {
+    name,
+    age,
+    dapartment,
+    position,
+    salary,
+    email,
+    phoneNumber,
+    address,
+    registrationDate,
+  } = req.body;
+  const newdata = {
+    id: data.length + 1,
+    name,
+    age,
+    dapartment,
+    position,
+    salary,
+    email,
+    phoneNumber,
+    address,
+    registrationDate,
+  };
+  data.push(newdata); // Fixed the array name here
+  res.status(201).json(newdata);
+});
 
 //PUT
+
 app.put('/api/employees/:id', (req, res) => {
   const user = data.find((b) => b.id === parseInt(req.params.id));
   if (!user) return res.status(404).send("employees not found");
+
 
   const { name, age , department,position,salary,email,phoneNumber,address,registrationDate } = req.body;
   user.name = name;
@@ -268,6 +310,18 @@ app.put('/api/employees/:id', (req, res) => {
   res.json(user);
 });
 //DELETE
+app.delete("/api/employees/:id", (req, res) => {
+  const idToDelete = parseInt(req.params.id);
+
+  const indexToDelete = data.findIndex((employee) => employee.id === idToDelete);
+
+  if (indexToDelete !== -1) {
+    const deletedEmployee = data.splice(indexToDelete, 1)[0];
+    res.status(200).json({ success: true, deletedEmployee });
+  } else {
+    res.status(404).json({ success: false, message: "Employee not found" });
+  }
+});
 
 const PORT = 5000;
 
