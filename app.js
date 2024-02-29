@@ -253,6 +253,18 @@ app.use(express.json());
 //PUT
 
 //DELETE
+app.delete("/api/employees/:id", (req, res) => {
+  const idToDelete = parseInt(req.params.id);
+
+  const indexToDelete = data.findIndex((employee) => employee.id === idToDelete);
+
+  if (indexToDelete !== -1) {
+    const deletedEmployee = data.splice(indexToDelete, 1)[0];
+    res.status(200).json({ success: true, deletedEmployee });
+  } else {
+    res.status(404).json({ success: false, message: "Employee not found" });
+  }
+});
 
 const PORT = 5000;
 
