@@ -249,6 +249,33 @@ app.use(express.json());
 //GET
 
 //POST
+app.post("/api/employees", (req, res) => {
+  const {
+    name,
+    age,
+    dapartment,
+    position,
+    salary,
+    email,
+    phoneNumber,
+    address,
+    registrationDate,
+  } = req.body;
+  const newdata = {
+    id: data.length + 1,
+    name,
+    age,
+    dapartment,
+    position,
+    salary,
+    email,
+    phoneNumber,
+    address,
+    registrationDate,
+  };
+  data.push(newdata); // Fixed the array name here
+  res.status(201).json(newdata);
+});
 
 //PUT
 
